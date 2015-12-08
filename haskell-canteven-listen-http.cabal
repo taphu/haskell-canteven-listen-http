@@ -1,0 +1,23 @@
+name:                haskell-canteven-listen-http
+version:             0.1.0.0
+-- synopsis:
+-- description:
+license:             Apache-2.0
+license-file:        LICENSE
+author:              Ethan Glasser-Camp
+maintainer:          eglassercamp@sumall.com
+-- copyright:
+category:            Development
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     Canteven.Listen.HTTP
+  -- other-modules:
+  other-extensions:    DeriveGeneric, NamedFieldPuns, OverloadedStrings
+  build-depends:
+    base >=4.7 && <4.8,
+    aeson >= 0.8.0.0 && <0.11
+  hs-source-dirs:      src
+  default-language:    Haskell2010
