@@ -9,21 +9,32 @@ module Canteven.Listen.HTTP (
     ) where
 
 import Data.Aeson (FromJSON(parseJSON), withObject, (.:))
+import Data.Functor ((<$>))
 import GHC.Generics (Generic)
 
--- | A type representing the ports to listen
+-- | Toplevel type to parse listeners out of a config file.
+data ListenHTTPConfig =
+    ListenHTTPConfig {
+        listeners :: [ListenerConfig]
+    } deriving (Generic)
+
+instance FromJSON ListenHTTPConfig where
+    parseJSON = withObject "WithListenHTTPConfig" $ \obj ->
+        ListenHTTPConfig <$> obj .: "listen"
+
+-- | A type that adds a ListenHTTPConfig to any other config.
 data WithListenHTTPConfig userConfig =
     WithListenHTTPConfig {
-        listeners :: [ListenerConfig],
+        listenConfig :: ListenHTTPConfig,
         userConfig :: userConfig
     } deriving (Generic)
 
 instance (FromJSON c) => FromJSON (WithListenHTTPConfig c) where
-    parseJSON v = flip (withObject "WithListenHTTPConfig") v $ \obj -> do
-        listeners <- obj .: "listen"
+    parseJSON v = do
+        listenConfig <- parseJSON v
         userConfig <- parseJSON v
         return WithListenHTTPConfig {
-            listeners,
+            listenConfig,
             userConfig
         }
 
