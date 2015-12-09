@@ -36,7 +36,7 @@ data ListenerConfig =
         port :: Int,
         cert :: Maybe FilePath,
         key :: Maybe FilePath
-    } deriving (Generic)
+    } deriving (Generic, Eq, Show)
 
 instance FromJSON ListenerConfig
 
