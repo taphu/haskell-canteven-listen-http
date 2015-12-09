@@ -4,6 +4,7 @@
 -- | Types for the canteven-serve-with-ekg library.
 module Canteven.Listen.HTTP (
     ListenerConfig(..),
+    ListenHTTPConfig(..),
     Scheme(..),
     WithListenHTTPConfig(..),
     ) where
